@@ -20,6 +20,10 @@ const ConditionAlertNotifications = React.createClass({
   },
 
   componentDidMount() {
+    this._loadData();
+  },
+
+  _loadData() {
     AlertNotificationsActions.available();
     AlarmCallbacksActions.list(this.props.stream.id)
       .then(callbacks => this.setState({ conditionNotifications: callbacks }));
@@ -41,7 +45,8 @@ const ConditionAlertNotifications = React.createClass({
         <h2>Notifications</h2>
         <p>Define the notifications to send when the condition is satisfied.</p>
 
-        <AlertNotificationsList alertNotifications={notifications} streams={[this.props.stream]} />
+        <AlertNotificationsList alertNotifications={notifications} streams={[this.props.stream]}
+                                onNotificationUpdate={this._loadData} onNotificationDelete={this._loadData} />
       </div>
     );
   },
